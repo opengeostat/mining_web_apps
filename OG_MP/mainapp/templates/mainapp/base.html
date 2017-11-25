@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{% block language %}{% endblock %}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <!--Css styles-->
+    <link href="{% static 'mainstyles/bootstrap.min.css' %}" rel="stylesheet" >
+    <link href="{% static 'mainstyles/font-awesome.min.css' %}" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
+    <!--END Css styles-->
+</head>
+
+<body class="clearfix d-flex align-items-start flex-column">
+  <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-dark bg-dark w-100" id="site-navbar">
+    <a class="navbar-brand" href="{% url 'mainapp:index' %}">Metal Average Price</a>
+    <div id="navbar" class="navbar-collapse collapse" style="width:auto">
+      <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" target="_blank" href="http://opengeostat.com/">OpenGeostat</a></li>
+      </ul>
+    </div>
+    </nav>
+    <div class="container-fluid">
+        {% block body_content %} {% endblock %}
+    </div>
+    {% include "mainapp/footer.html" %}
+</body>
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block script %}
+{% endblock %}
+</html>

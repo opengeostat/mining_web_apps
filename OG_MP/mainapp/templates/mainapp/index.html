@@ -1,0 +1,62 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+{% block language %}en{% endblock %}
+{% block title %}Metal Average Price{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.10.min.css" type="text/css" />
+{% endblock %}
+{% block body_content %}
+<div class="row">
+<div class="{% if graph %}col-lg-5{% else %}col-md-6 mx-auto{% endif %}">
+    <form method="GET" action="{% url "mainapp:data_visualizer" %}" class="form-row mt-2">
+      <div class="form-group col-12">
+        <label for="exampleInputEmail1">Mineral</label>
+        {{ form.mineral }}
+      </div>
+      {% if form.end_year.errors %}
+      <div class="alert alert-danger alert-dismissible fade show pb-0 px-2 col-12" role="alert">
+        <strong>{{ form.end_year.errors.as_text }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+      <div class="form-group col-6">
+        <label for="exampleInputEmail1">Start Year</label>
+        {{ form.start_year }}
+      </div>
+      <div class="form-group col-6">
+        <label for="exampleInputEmail1">End Year</label>
+        {{ form.end_year }}
+      </div>
+      <button type="submit" name="submit" class="btn btn-dark ml-auto mr-1">Plot</button>
+    </form>
+</div>
+{% if graph %}
+<div class="col-lg-6 col-11 mx-auto">
+  <h4 class="mt-2">Average: {{ avg }}</h4>
+  <div class="graph-container">
+  <div id="graph">
+    {{ graph|safe }}
+  </div>
+  </div>
+</div>
+{% endif %}
+</div>
+<style>
+html{
+    height: 100%;
+    }
+body{
+    min-height: 100%
+}
+.btn {
+  cursor: pointer
+}
+</style>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.10.min.js"></script>
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-api-0.12.10.min.js"></script>
+{{ script|safe }}
+{% endblock %}
